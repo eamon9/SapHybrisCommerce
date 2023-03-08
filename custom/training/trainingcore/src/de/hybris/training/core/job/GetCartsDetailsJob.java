@@ -6,6 +6,7 @@ import de.hybris.platform.acceleratorservices.model.email.EmailAttachmentModel;
 import de.hybris.platform.acceleratorservices.model.email.EmailMessageModel;
 import de.hybris.platform.catalog.CatalogService;
 import de.hybris.platform.catalog.CatalogVersionService;
+import de.hybris.platform.core.model.order.CartEntryModel;
 import de.hybris.platform.core.model.order.CartModel;
 import de.hybris.platform.cronjob.enums.CronJobResult;
 import de.hybris.platform.cronjob.enums.CronJobStatus;
@@ -44,9 +45,9 @@ public class GetCartsDetailsJob extends AbstractJobPerformable {
     public PerformResult perform(final CronJobModel arg0) {
         String resultoutput = "Cart Details \n";
 
-        final List<CartModel> model = testCartsService.getCartsDetails();
+        final List<CartEntryModel> model = testCartsService.getCartsDetails();
 
-        for (final CartModel m : model) {
+        for (final CartEntryModel m : model) {
             resultoutput += createCSVRow(m);
         }
 
@@ -55,7 +56,7 @@ public class GetCartsDetailsJob extends AbstractJobPerformable {
         return new PerformResult(CronJobResult.SUCCESS, CronJobStatus.FINISHED);
     }
 
-    private void sendEmail(final String resultoutput, final List<CartModel> model) {
+    private void sendEmail(final String resultoutput, final List<CartEntryModel> model) {
         final EmailAddressModel fromEmail = new EmailAddressModel();
         fromEmail.setEmailAddress("yourshopingmall@icloud.com");
         fromEmail.setDisplayName("No-Reply ");
@@ -98,8 +99,8 @@ public class GetCartsDetailsJob extends AbstractJobPerformable {
         return attachments;
     }
 
-    protected String createCSVRow(final CartModel item) {
-        final String row = "," + item.getCode() + "\n";
+    protected String createCSVRow(final CartEntryModel item) {
+        final String row = "," + item.toString() + "\n";
         return  row;
     }
 }
