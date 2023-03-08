@@ -26,7 +26,7 @@ import java.util.List;
 public class GetCartsDetailsJob extends AbstractJobPerformable {
 
     @Resource
-    private CatalogService catalogService; //comment
+    private CatalogService catalogService;
 
     @Resource
     private CatalogVersionService catalogVersionService;
